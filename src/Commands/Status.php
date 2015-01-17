@@ -11,7 +11,6 @@ namespace Checker\Commands;
 
 use Checker\Factory;
 use Checker\Helper;
-use Checker\Modules;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
