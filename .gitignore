@@ -1,0 +1,17 @@
+# IDE
+.idea/
+.idea_modules/
+
+# System
+.directory
+
+# Composer
+composer.phar
+composer.lock
+
+# Vendor
+vendor
+build
+
+# Configuration
+box.json
