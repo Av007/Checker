@@ -9,12 +9,9 @@
 
 namespace Checker\Commands;
 
-use Checker\Factory;
 use Checker\Helper;
-use Checker\Modules;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

@@ -1,8 +1,6 @@
 <?php
 namespace Checker;
 
-use Herrera\Phar\Update\Exception\Exception;
-
 class Helper
 {
     const configFilePath = '/config.ini';
