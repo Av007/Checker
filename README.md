@@ -1,6 +1,8 @@
 README
 ======
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/226328d9-ed92-4f75-8fb4-3f948f8abde1/mini.png)](https://insight.sensiolabs.com/projects/226328d9-ed92-4f75-8fb4-3f948f8abde1)
+
 Check project v.1.0
 -------------------
 
