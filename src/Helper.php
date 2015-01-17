@@ -34,7 +34,7 @@ class Helper
             $writer  = new \Zend\Config\Writer\Ini();
             $reader  = new \Zend\Config\Reader\Ini();
             $content = $reader->fromFile(__DIR__ . self::configFilePath);
-            $content = (isset($content[$name]) and $content[$name]) ? $content[$name] : null;
+            $content = (isset($content[$name]) && $content[$name]) ? $content[$name] : null;
 
             return $writer->toString($content);
 
@@ -78,38 +78,12 @@ class Helper
      */
     public static function getLogo()
     {
-        return ' ____                   _         _
-/ ___| _ __   ___  __ _| | ____ _| |__   ___   ___  ___
-\___ \| \'_ \ / _ \/ _` | |/ / _` | \'_ \ / _ \ / _ \/ __|
- ___) | |_) |  __/ (_| |   < (_| | |_) | (_) | (_) \__ \
-|____/| .__/ \___|\__,_|_|\_\__,_|_.__/ \___/ \___/|___/
-      |_|
-';
-    }
+        return '  ____ _               _
+ / ___| |__   ___  ___| | _____ _ __
+| |   | \'_ \ / _ \/ __| |/ / _ \ \'__|
+| |___| | | |  __/ (__|   <  __/ |
+ \____|_| |_|\___|\___|_|\_\___|_|
 
-    /**
-     * Creates file
-     *
-     * @param string $filename
-     * @param string $content
-     * @throws \Exception
-     */
-    protected static function fileWrite($filename, &$content)
-    {
-        if (!is_writable($filename)) {
-            if (!chmod($filename, 0666)) {
-                throw new \Exception('Cannot change the mode of file ' . $filename);
-            }
-        }
-        if (!$fp = @fopen($filename, 'w')) {
-            throw new \Exception('Cannot open file ' . $filename);
-        }
-        if (fwrite($fp, $content) === false) {
-            throw new \Exception('Cannot write to file ' . $filename);
-            exit;
-        }
-        if (!fclose($fp)) {
-            throw new \Exception('Cannot close file ' . $filename);
-        }
+';
     }
 }

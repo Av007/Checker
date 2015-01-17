@@ -37,7 +37,7 @@ class Status extends Command
      */
     public function __construct($name = null)
     {
-        parent::__construct($name = null);
+        parent::__construct($name);
         $this->styles['fire'] = new OutputFormatterStyle('white', 'green', array('bold'));
         $this->modules = array(
             'database',

@@ -38,7 +38,7 @@ class Config extends Command
      */
     public function __construct($name = null)
     {
-        parent::__construct($name = null);
+        parent::__construct($name);
         $this->styles['fire'] = new OutputFormatterStyle('white', 'green', array('bold'));
     }
 
