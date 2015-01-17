@@ -3,7 +3,7 @@ namespace Checker;
 
 class Helper
 {
-    const configFilePath = '/config.ini';
+    const CONFIGFILE = '/config.ini';
 
     /**
      * Gets Config
@@ -12,9 +12,9 @@ class Helper
      */
     public static function getConfig()
     {
-        $configPath = dirname(\Phar::running(false)) . self::configFilePath;
+        $configPath = dirname(\Phar::running(false)) . self::CONFIGFILE;
         if (!file_exists($configPath)) {
-            $configPath = __DIR__ . self::configFilePath;
+            $configPath = __DIR__ . self::CONFIGFILE;
         }
 
         return parse_ini_file($configPath);
@@ -31,13 +31,13 @@ class Helper
         if ($name) {
             $writer  = new \Zend\Config\Writer\Ini();
             $reader  = new \Zend\Config\Reader\Ini();
-            $content = $reader->fromFile(__DIR__ . self::configFilePath);
+            $content = $reader->fromFile(__DIR__ . self::CONFIGFILE);
             $content = (isset($content[$name]) && $content[$name]) ? $content[$name] : null;
 
             return $writer->toString($content);
 
         } else {
-            $content = file_get_contents(__DIR__ . self::configFilePath);
+            $content = file_get_contents(__DIR__ . self::CONFIGFILE);
         }
 
         return $content;
@@ -54,18 +54,18 @@ class Helper
     public static function updateConfig($name, $value)
     {
         $reader  = new \Zend\Config\Reader\Ini();
-        $content = $reader->fromFile(__DIR__ . self::configFilePath);
+        $content = $reader->fromFile(__DIR__ . self::CONFIGFILE);
         $separator = explode('.', $name);
 
         $content[$separator[0]][$separator[0]][$separator[1]] = $value;
 
         $writer  = new \Zend\Config\Writer\Ini();
-        return @file_put_contents(__DIR__ . self::configFilePath, $writer->toString($content));
+        return @file_put_contents(__DIR__ . self::CONFIGFILE, $writer->toString($content));
     }
 
     public static function showItemConfig()
     {
-        $sections = parse_ini_file(__DIR__ . self::configFilePath, true);
+        $sections = parse_ini_file(__DIR__ . self::CONFIGFILE, true);
         return array_keys($sections);
     }
 

@@ -1,5 +1,5 @@
 {
-  "name": "Av007/Checker",
+  "name": "av007/checker",
   "description": "Check project - helps to check custom php logic scripts as console command. Console command runs as a phar file.",
   "minimum-stability": "stable",
   "license": "proprietary",
