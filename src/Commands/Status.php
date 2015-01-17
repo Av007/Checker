@@ -40,9 +40,9 @@ class Status extends Command
         parent::__construct($name = null);
         $this->styles['fire'] = new OutputFormatterStyle('white', 'green', array('bold'));
         $this->modules = array(
-            'memcached',
-            'email',
             'database',
+            //'email',
+            'memcached',
             'pages',
         );
     }

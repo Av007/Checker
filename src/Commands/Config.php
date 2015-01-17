@@ -2,7 +2,7 @@
 /**
  * Config command
  *
- * @author     Vladimir Avdeev (avdeevvladimir@gmail.com)
+ 1
  * @copyright  Copyright (c) 2015 PhpStorm, LLC.
  * @version    1.0.0: 14.01.15 14:56
  */
