@@ -12,12 +12,7 @@ class Helper
      */
     public static function getConfig()
     {
-        $configPath = dirname(\Phar::running(false)) . self::CONFIGFILE;
-        if (!file_exists($configPath)) {
-            $configPath = __DIR__ . self::CONFIGFILE;
-        }
-
-        return parse_ini_file($configPath);
+        return parse_ini_file(self::getConfigPath());
     }
 
     /**
@@ -31,13 +26,13 @@ class Helper
         if ($name) {
             $writer  = new \Zend\Config\Writer\Ini();
             $reader  = new \Zend\Config\Reader\Ini();
-            $content = $reader->fromFile(__DIR__ . self::CONFIGFILE);
+            $content = $reader->fromFile(self::getConfigPath());
             $content = (isset($content[$name]) && $content[$name]) ? $content[$name] : null;
 
             return $writer->toString($content);
 
         } else {
-            $content = file_get_contents(__DIR__ . self::CONFIGFILE);
+            $content = file_get_contents(self::getConfigPath());
         }
 
         return $content;
@@ -53,19 +48,21 @@ class Helper
      */
     public static function updateConfig($name, $value)
     {
+        $configPath = self::getConfigPath();
         $reader  = new \Zend\Config\Reader\Ini();
-        $content = $reader->fromFile(__DIR__ . self::CONFIGFILE);
+        $content = $reader->fromFile($configPath);
         $separator = explode('.', $name);
 
         $content[$separator[0]][$separator[0]][$separator[1]] = $value;
 
         $writer  = new \Zend\Config\Writer\Ini();
-        return @file_put_contents(__DIR__ . self::CONFIGFILE, $writer->toString($content));
+
+        return @file_put_contents($configPath, $writer->toString($content));
     }
 
     public static function showItemConfig()
     {
-        $sections = parse_ini_file(__DIR__ . self::CONFIGFILE, true);
+        $sections = parse_ini_file(self::getConfigPath(), true);
         return array_keys($sections);
     }
 
@@ -83,5 +80,20 @@ class Helper
  \____|_| |_|\___|\___|_|\_\___|_|
 
 ';
+    }
+
+    /**
+     * Gets config file path
+     *
+     * @return string
+     */
+    protected static function getConfigPath()
+    {
+        $configPath = dirname(\Phar::running(false)) . self::CONFIGFILE;
+        if (!file_exists($configPath)) {
+            $configPath = __DIR__ . self::CONFIGFILE;
+        }
+
+        return $configPath;
     }
 }
