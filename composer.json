@@ -13,10 +13,13 @@
     "symfony/console": "*",
     "herrera-io/phar-update": "*",
     "swiftmailer/swiftmailer": "*",
-    "zendframework/zend-config": "2.3.*"
+    "zendframework/zend-config": "2.3.*",
+    "zendframework/zenddiagnostics": "dev-master"
   },
   "autoload": {
-    "psr-4": {"Checker\\": "src/"}
+    "psr-4": {
+      "Checker\\": "src/"
+    }
   },
   "require-dev": {
     "kherge/box": "*"

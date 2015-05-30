@@ -1,9 +1,13 @@
 <?php
+
 namespace Checker;
+
+use \Zend\Config\Writer\Ini as IniWriter;
+use \Zend\Config\Reader\Ini as IniReader;
 
 class Helper
 {
-    const CONFIGFILE = '/config.ini';
+    const CONFIG_FILE = '/config.ini';
 
     /**
      * Gets Config
@@ -24,8 +28,8 @@ class Helper
     public static function extractConfig($name = null)
     {
         if ($name) {
-            $writer  = new \Zend\Config\Writer\Ini();
-            $reader  = new \Zend\Config\Reader\Ini();
+            $writer  = new IniWriter();
+            $reader  = new IniReader();
             $content = $reader->fromFile(self::getConfigPath());
             $content = (isset($content[$name]) && $content[$name]) ? $content[$name] : null;
 
@@ -49,13 +53,13 @@ class Helper
     public static function updateConfig($name, $value)
     {
         $configPath = self::getConfigPath();
-        $reader  = new \Zend\Config\Reader\Ini();
+        $reader  = new IniReader();
         $content = $reader->fromFile($configPath);
         $separator = explode('.', $name);
 
         $content[$separator[0]][$separator[0]][$separator[1]] = $value;
 
-        $writer  = new \Zend\Config\Writer\Ini();
+        $writer  = new IniWriter();
 
         return @file_put_contents($configPath, $writer->toString($content));
     }
@@ -89,9 +93,9 @@ class Helper
      */
     protected static function getConfigPath()
     {
-        $configPath = dirname(\Phar::running(false)) . self::CONFIGFILE;
+        $configPath = dirname(\Phar::running(false)) . self::CONFIG_FILE;
         if (!file_exists($configPath)) {
-            $configPath = __DIR__ . self::CONFIGFILE;
+            $configPath = __DIR__ . self::CONFIG_FILE;
         }
 
         return $configPath;

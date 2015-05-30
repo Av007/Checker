@@ -3,6 +3,7 @@
 namespace Checker\Modules;
 
 use Checker\Services;
+use ZendDiagnostics\Check\Memcache;
 
 class Memcache
 {
@@ -28,6 +29,12 @@ class Memcache
 
     public function run()
     {
+
+
+
+        $checkLocal  = new Memcache('127.0.0.1'); // default port
+        $checkBackup = new Memcache('10.0.30.40', 11212);
+
         $result = array();
         $key = 'test_memcache_' . substr(md5(uniqid(rand(), true)), 12, 12);
         $value = 'this is test value';

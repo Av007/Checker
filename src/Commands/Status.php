@@ -9,13 +9,16 @@
 
 namespace Checker\Commands;
 
-use Checker\Factory;
+use Checker\Loader;
 use Checker\Helper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use ZendDiagnostics\Runner\Runner;
+use ZendDiagnostics\Check;
+use ZendDiagnostics\Runner\Reporter\BasicConsole;
 
 /**
  * Class Status
@@ -24,9 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Status extends Command
 {
-    const OUTPUT = 70;
-    /** @var array $styles custom styles */
-    protected $styles = array();
+    const OUTPUT = 80;
     /** @var array $modules modules list */
     protected $modules = array();
 
@@ -36,48 +37,50 @@ class Status extends Command
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->styles['fire'] = new OutputFormatterStyle('white', 'green', array('bold'));
-        $this->modules = array(
-            'database',
-            //'email',
-            'memcached',
-            'pages',
-        );
+
+        $this->modules = array();
     }
 
     protected function configure()
     {
-        $this
-            ->setName('status')
-            ->setDescription('Execute modules')
-            ->addOption('modules', null, InputOption::VALUE_NONE, 'Modules list');
+        $this->setName('status')
+             ->setDescription('Execute modules')
+             ->addOption('modules', null, InputOption::VALUE_NONE, 'Modules list');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // sets styles
-        foreach ($this->styles as $key => $style) {
-            $output->getFormatter()->setStyle($key, $style);
+        /*// Configure check runner
+        $runner = new Runner();
+        $runner->addChecks($checkCollection);
+        $runner->getConfig()->setBreakOnFailure($breakOnFailure);
+
+        if (!$quiet && $this->getRequest() instanceof ConsoleRequest) {
+            if ($verbose || $debug) {
+                $runner->addReporter(new VerboseConsole($console, $debug));
+            } else {
+                $runner->addReporter(new BasicConsole($console));
+            }
+        }
+        // Run tests
+        $results = $runner->run();*/
+
+        new Loader();
+        // Add checks
+
+        foreach ($this->modules as $module) {
+            echo '<pre>'; var_dump($module); die;
+
         }
 
         $output->writeln(str_repeat('+', $this::OUTPUT));
         $output->writeln(Helper::getLogo());
         $output->writeln(str_repeat('=', $this::OUTPUT));
 
-        if ($input->getOption('modules')) {
-            foreach ($this->modules as $module) {
-                $output->writeln('<info>' . $module . '</info>');
-            }
-            return;
-        }
+        // Add console reporter
+        //$runner->addReporter(new BasicConsole(self::OUTPUT, true));
 
-        foreach ($this->modules as $module) {
-            $currentModule = Factory::build($module);
-
-            $initData = $currentModule->init();
-            $output->write('<fire>' . $initData['title'] . '</fire>' . '<info> ' . $initData['operation'] . '</info>: ');
-            $data = $currentModule->run();
-            $output->writeln('<comment>' . $data['result'] . '</comment>');
-        }
+        // Run all checks
+        $runner->run();
     }
 }
