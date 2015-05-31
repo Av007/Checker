@@ -1,9 +1,8 @@
 <?php
 
-namespace Checker\Modules;
+namespace Checker\Module;
 
 use Checker\Services;
-use ZendDiagnostics\Check\Memcache;
 
 class Memcache
 {
